@@ -2,8 +2,6 @@ import streamlit as st
 import requests
 import json
 
-st.title('Chat Messages from API')
-
 get_url = 'http://localhost:5000/users/12345/conversations/67890/messages'
 
 response = requests.get(get_url)
@@ -11,7 +9,7 @@ response = requests.get(get_url)
 if response.status_code == 200:
     data = json.loads(response.text)
     for message in data:
-        st.text(message.get("text", "No text available"))
+        st.markdown(message.get("text", "No text available"))
 else:
     st.write(f'Failed to retrieve data: Status code {response.status_code}')
 
@@ -26,10 +24,11 @@ with st.form(key='message_form'):
 
         post_response = requests.post(post_url, json=post_data)
 
-        if post_response.status_code == 200 or post_response.status_code == 201:
-            st.success("Message sent successfully.")
-        else:
-            st.error(f'Failed to send message: Status code {post_response.status_code}')
+        # if post_response.status_code == 200 or post_response.status_code == 201:
+        #     st.success("Message sent successfully.")
+        # else:
+        #     st.error(f'Failed to send message: Status code 
+            # {post_response.status_code}')
 
 
 # ------------------------------------------------------------
